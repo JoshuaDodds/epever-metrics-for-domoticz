@@ -1,0 +1,16 @@
+.idea
+.idea*
+*pyc
+src/venv
+
+# Emacs
+*~
+*#
+.#*
+.dir-locals.el
+
+venv*/
+.DS_Store
+docker/.ssh/id_rsa*
+.terraform/
+*.backup
