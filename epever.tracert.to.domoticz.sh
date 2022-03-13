@@ -10,34 +10,28 @@
 #
 #
 ####################################################################################################################################
+# INFO="This script will execute the /root/scripts/epevertracer/epever.tracer.php file put the output to a file, 
+# get the value's from the output file, show them on console if needed, and send them to Domoticz, this is super simple, easy too change.
+# Many thanks to Toggio (https://github.com/toggio/PhpEpsolarTracer)
 
-INFO="This script will execute the /root/scripts/epevertracer/epever.tracer.php file put the output to a file, 
-get the value's from the output file, show them on console if needed, and send them to Domoticz, this is super simple, easy too change.
+# For console use     : /root/scripts/epevertracer/epever.tracert.to.domoticz.sh
+# For crontab use     : /root/scripts/epevertracer/epever.tracert.to.domoticz.sh >> /dev/null 2>&1
+# For all the info    : php /root/scripts/epevertracer/example_cli.php
 
-Many thanks to Toggio (https://github.com/toggio/PhpEpsolarTracer)
-
-For console use     : /root/scripts/epevertracer/epever.tracert.to.domoticz.sh
-For crontab use     : /root/scripts/epevertracer/epever.tracert.to.domoticz.sh >> /dev/null 2>&1
-For all the info    : php /root/scripts/epevertracer/example_cli.php
-
-1. Change the serial port /root/scripts/epevertracer/epever.tracer.php line 26 ('/dev/ttyXRUSB0')
-2. Change the Domoticz IP & Port (see below)
-3. Add/Change the acording Domoticz IDX's (see below)
-4. Optional : Change the working directory, where you wanna place the files
-5. Optional : If you need more info from the controller compare epever.tracer.php vs example_cli.php
-6. Optional : Maybe make 2 cronjobs, with no sunhours just poll once a hour, with sun every min."
-
+# 1. Change the serial port /root/scripts/epevertracer/epever.tracer.php line 26 ('/dev/ttyXRUSB0')
+# 2. Change the Domoticz IP & Port (see below)
+# 3. Add/Change the acording Domoticz IDX's (see below)
+# 4. Optional : Change the working directory, where you wanna place the files
+# 5. Optional : If you need more info from the controller compare epever.tracer.php vs example_cli.php
+# 6. Optional : Maybe make 2 cronjobs, with no sunhours just poll once a hour, with sun every min."
 ####################################################################################################################################
-
 
 # Working directory, place where all epever tracer file's are
 WORKINGDIR="/app/epever-metrics-for-domoticz"
 
-
 # Domoticz IP address
 DOMOTICZIP="dz-insecure.hs.mfis.net"
 DOMOTICZPORT="80"
-
 
 ### PV Array
 ## Domoticz dummy Voltage
@@ -119,7 +113,6 @@ BATTERYVOLTAGE=`cat $OUTPUTFILE | sed -n 7p | awk '{print $4}' | sed 's/.$//'`
 
 
 # Display the main value's to console with clear value's
-clear
 echo "$INFO"
 echo ""
 #echo "CHARGERTEMP             = $CHARGERTEMP °C"
@@ -140,11 +133,10 @@ echo "BATTERYVOLTAGE          = $BATTERYVOLTAGE V"
 #echo "CONSUMEDENERGYTHISYEAR  = $CONSUMEDENERGYTHISYEAR kWh"
 #echo "CONSUMEDENERGYTOTAL     = $CONSUMEDENERGYTOTAL kWh"
 echo ""
-echo ""
-
 
 # Some dummy value for Domoticz energy total
 DUMMYVALUE="1"
+
 # Send the value's to Domoticz
 #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVARRAYTEMPIDX&nvalue=0&svalue=$CHARGERTEMP" >> /dev/null 2>&1
 #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVARRAYVOLTAGEIDX&nvalue=0&svalue=$PVARRAYVOLTAGE" >> /dev/null 2>&1
@@ -164,6 +156,4 @@ curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice
 #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTHISYEARIDX&nvalue=0&svalue=$CONSUMEDENERGYTHISYEAR" >> /dev/null 2>&1
 #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTOTALIDX&nvalue=0&svalue=$CONSUMEDENERGYTOTAL" >> /dev/null 2>&1
 
-	
 exit
-#EOF
