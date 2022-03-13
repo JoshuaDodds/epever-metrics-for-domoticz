@@ -46,6 +46,7 @@ DOMOTICZPORT="80"
 ### Battery
 # Domoticz dummy Voltage
 PVBATTERYVOLTAGEIDX="586"
+PVBATTERYSOCIDX="587"
 # Domoticz dummy 1 fase AMP
 #BATTERYCHARGINGCURRENTIDX="291"
 # Domoticz dummy Electricity (instant and counter) (change item, utility, item, change, Choose delivery and Energy read: Computed)
@@ -100,6 +101,7 @@ OUTPUTFILE="$WORKINGDIR/epever.output.txt"
 #GENERATEKWHTOTAL=`cat $OUTPUTFILE | sed -n 35p | awk '{print $5}' | sed 's/.$//' | sed 's/.$//' | sed 's/.$//'`
 
 BATTERYVOLTAGE=`cat $OUTPUTFILE | sed -n 7p | awk '{print $4}' | sed 's/.$//'`
+BATTERYSOC=`cat $OUTPUTFILE | sed -n 16p | awk '{print $4}' | sed 's/.$//'`
 #BATTERYCHARGINGCURRENT=`cat $OUTPUTFILE | sed -n 8p | awk '{print $5}' | sed 's/.$//'`
 #BATTERYCHARGINGPOWER=`cat $OUTPUTFILE | sed -n 9p | awk '{print $5}' | sed 's/.$//'`
 
@@ -124,6 +126,7 @@ echo ""
 #echo "GENERATEKWHYEAR         = $GENERATEKWHYEAR kWh"
 #echo "GENERATEKWHTOTAL        = $GENERATEKWHTOTAL kWh"
 echo "BATTERYVOLTAGE          = $BATTERYVOLTAGE V"
+echo "BATTERYSOC              = $BATTERYSOC %"
 #echo "BATTERYCHARGINGCURRENT  = $BATTERYCHARGINGCURRENT A"
 #echo "BATTERYCHARGINGPOWER    = $BATTERYCHARGINGPOWER W"
 #echo "LOADCURRENT             = $LOADCURRENT A"
@@ -143,6 +146,7 @@ DUMMYVALUE="1"
 #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVARRAYCURRENTIDX&nvalue=0&svalue=$PVARRAYCURRENT" >> /dev/null 2>&1
 #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVARRAYPOWERIDX&nvalue=0&svalue="$PVARRAYPOWER";"$DUMMYVALUE"" >> /dev/null 2>&1
 curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVBATTERYVOLTAGEIDX&nvalue=0&svalue=$BATTERYVOLTAGE" >> /dev/null 2>&1
+curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVBATTERYSOCIDX&nvalue=0&svalue=$BATTERYSOC" >> /dev/null 2>&1
 #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$BATTERYCHARGINGCURRENTIDX&nvalue=0&svalue=$BATTERYCHARGINGCURRENT" >> /dev/null 2>&1
 #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$BATTERYCHARGINGPOWERIDX&nvalue=0&svalue="$BATTERYCHARGINGPOWER";"$DUMMYVALUE"" >> /dev/null 2>&1
 #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$GENERATEKWHTODAYIDX&nvalue=0&svalue=$GENERATEKWHTODAY" >> /dev/null 2>&1
