@@ -149,5 +149,5 @@ while true; do
   curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTHISYEARIDX&nvalue=0&svalue=$CONSUMEDENERGYTHISYEAR" >> /dev/null 2>&1
   #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTOTALIDX&nvalue=0&svalue=$CONSUMEDENERGYTOTAL" >> /dev/null 2>&1
 
-  sleep 60s
+  sleep 10s
 done
