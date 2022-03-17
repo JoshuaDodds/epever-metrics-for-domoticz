@@ -106,6 +106,7 @@ while true; do
   CONSUMEDENERGYTOTAL=`cat $OUTPUTFILE | sed -n 31p | awk '{print $5}' | sed 's/.$//' | sed 's/.$//' | sed 's/.$//'`
 
   # Display the main value's to console with clear value's
+  echo "-------------------------------------------------------"
   echo "CHARGERTEMP             = $CHARGERTEMP °C"
   echo "PVARRAYVOLTAGE          = $PVARRAYVOLTAGE V"
   echo "PVARRAYCURRENT          = $PVARRAYCURRENT A"
@@ -124,7 +125,7 @@ while true; do
   echo "CONSUMEDENERGYTHISMONTH = $CONSUMEDENERGYTHISMONTH kWh"
   echo "CONSUMEDENERGYTHISYEAR  = $CONSUMEDENERGYTHISYEAR kWh"
   echo "CONSUMEDENERGYTOTAL     = $CONSUMEDENERGYTOTAL kWh"
-  echo ""
+  echo "-------------------------------------------------------"
 
   # Some dummy value for Domoticz energy total
   DUMMYVALUE="1"
