@@ -105,50 +105,55 @@ while true; do
   CONSUMEDENERGYTHISYEAR=`cat $OUTPUTFILE | sed -n 30p | awk '{print $6}' | sed 's/.$//' | sed 's/.$//' | sed 's/.$//'`
   CONSUMEDENERGYTOTAL=`cat $OUTPUTFILE | sed -n 31p | awk '{print $5}' | sed 's/.$//' | sed 's/.$//' | sed 's/.$//'`
 
-  # Display the main value's to console with clear value's
-  echo "-------------------------------------------------------"
-  echo "CHARGERTEMP             = $CHARGERTEMP °C"
-  echo "PVARRAYVOLTAGE          = $PVARRAYVOLTAGE V"
-  echo "PVARRAYCURRENT          = $PVARRAYCURRENT A"
-  echo "PVARRAYPOWER            = $PVARRAYPOWER W"
-  echo "GENERATEKWHTODAY        = $GENERATEKWHTODAY kWh"
-  echo "GENERATEKWHMONTH        = $GENERATEKWHMONTH kWh"
-  echo "GENERATEKWHYEAR         = $GENERATEKWHYEAR kWh"
-  echo "GENERATEKWHTOTAL        = $GENERATEKWHTOTAL kWh"
-  echo "BATTERYVOLTAGE          = $BATTERYVOLTAGE V"
-  echo "BATTERYSOC              = $BATTERYSOC %"
-  echo "BATTERYCHARGINGCURRENT  = $BATTERYCHARGINGCURRENT A"
-  echo "BATTERYCHARGINGPOWER    = $BATTERYCHARGINGPOWER W"
-  echo "LOADCURRENT             = $LOADCURRENT A"
-  echo "LOADPOWER               = $LOADPOWER W"
-  echo "CONSUMEDENERGYTODAY     = $CONSUMEDENERGYTODAY kWh"
-  echo "CONSUMEDENERGYTHISMONTH = $CONSUMEDENERGYTHISMONTH kWh"
-  echo "CONSUMEDENERGYTHISYEAR  = $CONSUMEDENERGYTHISYEAR kWh"
-  echo "CONSUMEDENERGYTOTAL     = $CONSUMEDENERGYTOTAL kWh"
-  echo "-------------------------------------------------------"
+  if [ "$CHARGERTEMP" ]; then
+    # Display the main value's to console with clear value's
+    echo "-------------------------------------------------------"
+    echo "CHARGERTEMP             = $CHARGERTEMP °C"
+    echo "PVARRAYVOLTAGE          = $PVARRAYVOLTAGE V"
+    echo "PVARRAYCURRENT          = $PVARRAYCURRENT A"
+    echo "PVARRAYPOWER            = $PVARRAYPOWER W"
+    echo "GENERATEKWHTODAY        = $GENERATEKWHTODAY kWh"
+    echo "GENERATEKWHMONTH        = $GENERATEKWHMONTH kWh"
+    echo "GENERATEKWHYEAR         = $GENERATEKWHYEAR kWh"
+    echo "GENERATEKWHTOTAL        = $GENERATEKWHTOTAL kWh"
+    echo "BATTERYVOLTAGE          = $BATTERYVOLTAGE V"
+    echo "BATTERYSOC              = $BATTERYSOC %"
+    echo "BATTERYCHARGINGCURRENT  = $BATTERYCHARGINGCURRENT A"
+    echo "BATTERYCHARGINGPOWER    = $BATTERYCHARGINGPOWER W"
+    echo "LOADCURRENT             = $LOADCURRENT A"
+    echo "LOADPOWER               = $LOADPOWER W"
+    echo "CONSUMEDENERGYTODAY     = $CONSUMEDENERGYTODAY kWh"
+    echo "CONSUMEDENERGYTHISMONTH = $CONSUMEDENERGYTHISMONTH kWh"
+    echo "CONSUMEDENERGYTHISYEAR  = $CONSUMEDENERGYTHISYEAR kWh"
+    echo "CONSUMEDENERGYTOTAL     = $CONSUMEDENERGYTOTAL kWh"
+    echo "-------------------------------------------------------"
+  
+    # Some dummy value for Domoticz energy total
+    DUMMYVALUE="1"
 
-  # Some dummy value for Domoticz energy total
-  DUMMYVALUE="1"
-
-  # Send the value's to Domoticz
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CHARGERTEMPIDX&nvalue=0&svalue=$CHARGERTEMP" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVARRAYVOLTAGEIDX&nvalue=0&svalue=$PVARRAYVOLTAGE" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVARRAYCURRENTIDX&nvalue=0&svalue=$PVARRAYCURRENT" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVARRAYPOWERIDX&nvalue=0&svalue="$PVARRAYPOWER";"$DUMMYVALUE"" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVBATTERYVOLTAGEIDX&nvalue=0&svalue=$BATTERYVOLTAGE" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVBATTERYSOCIDX&nvalue=0&svalue=$BATTERYSOC" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$BATTERYCHARGINGCURRENTIDX&nvalue=0&svalue=$BATTERYCHARGINGCURRENT" >> /dev/null 2>&1
-  #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$BATTERYCHARGINGPOWERIDX&nvalue=0&svalue="$BATTERYCHARGINGPOWER";"$DUMMYVALUE"" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$GENERATEKWHTODAYIDX&nvalue=0&svalue=$GENERATEKWHTODAY" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$GENERATEKWHMONTHIDX&nvalue=0&svalue=$GENERATEKWHMONTH" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$GENERATEKWHYEARIDX&nvalue=0&svalue=$GENERATEKWHYEAR" >> /dev/null 2>&1
-  #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$GENERATEKWHTOTALIDX&nvalue=0&svalue=$GENERATEKWHTOTAL" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$LOADCURRENTIDX&nvalue=0&svalue=$LOADCURRENT" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$LOADPOWERIDX&nvalue=0&svalue="$LOADPOWER";"$DUMMYVALUE"" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTODAYIDX&nvalue=0&svalue=$CONSUMEDENERGYTODAY" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTHISMONTHIDX&nvalue=0&svalue=$CONSUMEDENERGYTHISMONTH" >> /dev/null 2>&1
-  curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTHISYEARIDX&nvalue=0&svalue=$CONSUMEDENERGYTHISYEAR" >> /dev/null 2>&1
-  #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTOTALIDX&nvalue=0&svalue=$CONSUMEDENERGYTOTAL" >> /dev/null 2>&1
+    # Send the value's to Domoticz
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CHARGERTEMPIDX&nvalue=0&svalue=$CHARGERTEMP" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVARRAYVOLTAGEIDX&nvalue=0&svalue=$PVARRAYVOLTAGE" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVARRAYCURRENTIDX&nvalue=0&svalue=$PVARRAYCURRENT" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVARRAYPOWERIDX&nvalue=0&svalue="$PVARRAYPOWER";"$DUMMYVALUE"" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVBATTERYVOLTAGEIDX&nvalue=0&svalue=$BATTERYVOLTAGE" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$PVBATTERYSOCIDX&nvalue=0&svalue=$BATTERYSOC" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$BATTERYCHARGINGCURRENTIDX&nvalue=0&svalue=$BATTERYCHARGINGCURRENT" >> /dev/null 2>&1
+    #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$BATTERYCHARGINGPOWERIDX&nvalue=0&svalue="$BATTERYCHARGINGPOWER";"$DUMMYVALUE"" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$GENERATEKWHTODAYIDX&nvalue=0&svalue=$GENERATEKWHTODAY" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$GENERATEKWHMONTHIDX&nvalue=0&svalue=$GENERATEKWHMONTH" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$GENERATEKWHYEARIDX&nvalue=0&svalue=$GENERATEKWHYEAR" >> /dev/null 2>&1
+    #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$GENERATEKWHTOTALIDX&nvalue=0&svalue=$GENERATEKWHTOTAL" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$LOADCURRENTIDX&nvalue=0&svalue=$LOADCURRENT" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$LOADPOWERIDX&nvalue=0&svalue="$LOADPOWER";"$DUMMYVALUE"" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTODAYIDX&nvalue=0&svalue=$CONSUMEDENERGYTODAY" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTHISMONTHIDX&nvalue=0&svalue=$CONSUMEDENERGYTHISMONTH" >> /dev/null 2>&1
+    curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTHISYEARIDX&nvalue=0&svalue=$CONSUMEDENERGYTHISYEAR" >> /dev/null 2>&1
+    #curl -i -s "http://$DOMOTICZIP:$DOMOTICZPORT/json.htm?type=command&param=udevice&idx=$CONSUMEDENERGYTOTALIDX&nvalue=0&svalue=$CONSUMEDENERGYTOTAL" >> /dev/null 2>&1
+  else
+    echo "Received empty values from serial adapter. Not updating domoticz..."
+  fi
 
   sleep 10s
 done
+
