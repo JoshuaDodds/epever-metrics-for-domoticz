@@ -22,7 +22,7 @@
  */
  
 require_once 'PhpEpsolarTracer.php';
-$tracer = new PhpEpsolarTracer('/dev/ttyXRUSB0');
+$tracer = new PhpEpsolarTracer('/dev/ttyVIRT0');
 
 $tracerstatus_bgcolor = "#dedede";
 // $ecolor = "black";
@@ -278,4 +278,3 @@ if ($tracer->getRealTimeData()) {
 
   </body>
 </html>
-

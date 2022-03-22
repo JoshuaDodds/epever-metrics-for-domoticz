@@ -32,7 +32,7 @@ This example will print all datas received from solar  charger
 <?php
 require_once 'PhpEpsolarTracer.php';
 
-$tracer = new PhpEpsolarTracer('/dev/ttyXRUSB0');
+$tracer = new PhpEpsolarTracer('/dev/ttyVIRT0');
 
 if ($tracer->getInfoData()) {
 	print "Info Data\n";
@@ -383,4 +383,3 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 [//]: #
 
    [protocol]: <http://www.solar-elektro.cz/data/dokumenty/1733_modbus_protocol.pdf>
-   

@@ -23,7 +23,7 @@
  
 require_once 'PhpEpsolarTracer.php';
 
-$tracer = new PhpEpsolarTracer('/dev/ttyXRUSB0');
+$tracer = new PhpEpsolarTracer('/dev/ttyVIRT0');
 
 if ($tracer->getInfoData()) {
 	print "Info Data\n";

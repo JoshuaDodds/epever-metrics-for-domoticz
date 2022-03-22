@@ -35,7 +35,7 @@ class PhpSerialModbus
 	}
  
 	// Initialize serial port with specified parameters
-	public function deviceInit($port='/dev/ttyXRUSB0', $baud=115200, $parity='none', $char=8, $sbits=1, $flow='none')
+	public function deviceInit($port='/dev/ttyVIRT0', $baud=115200, $parity='none', $char=8, $sbits=1, $flow='none')
 	{
 		$this->serial->deviceSet($port);
 		$this->serial->confBaudRate($baud);

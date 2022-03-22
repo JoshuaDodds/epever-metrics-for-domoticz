@@ -18,7 +18,7 @@
 # For crontab use     : /root/scripts/epevertracer/epever.tracert.to.domoticz.sh >> /dev/null 2>&1
 # For all the info    : php /root/scripts/epevertracer/example_cli.php
 
-# 1. Change the serial port /root/scripts/epevertracer/epever.tracer.php line 26 ('/dev/ttyXRUSB0')
+# 1. Change the serial port /root/scripts/epevertracer/epever.tracer.php line 26 ('/dev/ttyVIRT0')
 # 2. Change the Domoticz IP & Port (see below)
 # 3. Add/Change the acording Domoticz IDX's (see below)
 # 4. Optional : Change the working directory, where you wanna place the files
@@ -80,6 +80,10 @@ CHARGERTEMPIDX="602"
 ####################################################################################################################################
 # The txt output file from reading from the solar controller
 OUTPUTFILE="$WORKINGDIR/epever.output.txt"
+
+# setup tcp backed virtual serial port
+socat pty,link=/dev/ttyVIRT0,raw tcp:192.168.1.140:8899,retry,forever,interval=5 &
+sleep 1s
 
 while true; do
   # Generate the txt file with controller output (https://github.com/toggio/PhpEpsolarTracer)
@@ -156,4 +160,3 @@ while true; do
 
   sleep 10s
 done
-

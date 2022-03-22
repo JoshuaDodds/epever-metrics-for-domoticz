@@ -189,7 +189,7 @@ class PhpEpsolarTracer
 	public $discreteData = Array ();
 	
 	// Initialize serial communication
-	public function __construct($port='/dev/ttyXRUSB0') {
+	public function __construct($port='/dev/ttyVIRT0') {
 		$this->tracer = new PhpSerialModbus;
 		if (php_sapi_name() == "cli") file_exists($port) or die("Cannot open serial port $port\n");
 		$this->tracer->deviceInit($port,115200,'none',8,1,'none');
