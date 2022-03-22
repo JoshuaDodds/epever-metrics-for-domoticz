@@ -109,7 +109,7 @@ while true; do
   CONSUMEDENERGYTHISYEAR=`cat $OUTPUTFILE | sed -n 30p | awk '{print $6}' | sed 's/.$//' | sed 's/.$//' | sed 's/.$//'`
   CONSUMEDENERGYTOTAL=`cat $OUTPUTFILE | sed -n 31p | awk '{print $5}' | sed 's/.$//' | sed 's/.$//' | sed 's/.$//'`
 
-  if [ "$CHARGERTEMP" ]; then
+  if ([ "$CHARGERTEMP" ] && [ "$CHARGERTEMP" != th ]); then
     # Display the main value's to console with clear value's
     echo "-------------------------------------------------------"
     echo "CHARGERTEMP             = $CHARGERTEMP °C"
@@ -131,7 +131,7 @@ while true; do
     echo "CONSUMEDENERGYTHISYEAR  = $CONSUMEDENERGYTHISYEAR kWh"
     echo "CONSUMEDENERGYTOTAL     = $CONSUMEDENERGYTOTAL kWh"
     echo "-------------------------------------------------------"
-  
+
     # Some dummy value for Domoticz energy total
     DUMMYVALUE="1"
 
