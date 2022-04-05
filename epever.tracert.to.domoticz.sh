@@ -82,7 +82,8 @@ CHARGERTEMPIDX="602"
 OUTPUTFILE="$WORKINGDIR/epever.output.txt"
 
 # setup tcp backed virtual serial port
-socat pty,link=/dev/ttyVIRT0,raw tcp:192.168.1.140:8899,retry,forever,interval=5 &
+#socat pty,link=/dev/ttyVIRT0,raw tcp:192.168.1.140:8899,retry,forever,interval=5 &
+socat pty,link=/dev/ttyVIRT0,raw,nonblock tcp:192.168.1.140:8899,forever &
 sleep 1s
 
 while true; do
